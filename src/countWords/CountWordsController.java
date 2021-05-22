@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class CountWordsController{
@@ -16,8 +18,6 @@ public class CountWordsController{
 	List<File> userFiles = new ArrayList<>();
 
 
-
-
 	CountWordsController(CountWordsInterface view, CountWordsModel model) {
 		this.view = view;
 		this.model = model;
@@ -26,10 +26,6 @@ public class CountWordsController{
 		this.view.addAnswerListener(new AnswerListener());
 	}
 
-
-	public static int getFileCount() {
-		return fileCount;
-	}
 
 
 	class AnswerListener implements ActionListener {
@@ -43,16 +39,34 @@ public class CountWordsController{
 
 			if (e.getSource() == view.countWordsButton) {
 
-				for (File userFile : userFiles) {
-					try {
-						System.out.println(userFile.getName() + ": " + model.countWords(userFile));
-					} catch (IOException e1) {
+				// For when countWordsButton is clicked without any files being selected
+				if (userFiles.size() == 0) {
 
-						e1.printStackTrace();
-					}
+					System.out.println("Please select a file to continue");
+
+				} else {
+
+					// Sets up thread pool with enough threads for each file
+				ExecutorService executorService = Executors.newFixedThreadPool(userFiles.size());
+
+					// Loops through each file, assign thread with executorService and call
+					// countWords method
+				for (File userFile : userFiles) {
+
+					executorService.execute(() -> {
+						try {
+								System.out.println(userFile.getName() + ": " + model.countWords(userFile));
+						} catch (IOException e1) {
+							e1.printStackTrace();
+						}
+					});
 				}
+
+				executorService.shutdown();
 			}
 		}
 	}
 }
+}
+
 
