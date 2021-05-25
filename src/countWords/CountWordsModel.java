@@ -1,41 +1,47 @@
 package countWords;
 
+/**
+ * This Class handles the data for the CountWords app and has one method to count words in a file
+ */
+
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class CountWordsModel {
 
 
-
-	public int countWords(File userFile) throws IOException {
-
-
-
-		// FileInputStream fileStream = new FileInputStream(userFile);
-		// InputStreamReader input = new InputStreamReader(fileStream);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(userFile)));
+	/**
+	 * This method counts the words in a file
+	 *
+	 * @param userFile as a File
+	 * @return number of words as an int
+	 */
+	public int countWords(File userFile) {
 
 		int wordCount = 0;
 		String data;
-		int i = 0;
 
+		// create BufferedReader to read content of file
+		try (BufferedReader reader = new BufferedReader(new FileReader(userFile))) {
+
+			// Reads until the end of the document
 			while ((data = reader.readLine()) != null) {
 
+				// Creates an array of the words, so each word is an element
 				String[] words = data.split("\\s+");
 
-				for (i = 0; i < words.length; i++) {
-					System.out.println(words[i]);
-				}
-
+				// Sets the word count, which is the same as the number of elements in the word
+				// array
 				wordCount = wordCount + words.length;
 			}
 
 			reader.close();
-			System.out.println(wordCount);
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return wordCount;
 	}
-
 }

@@ -1,5 +1,8 @@
 package countWords;
 
+/**
+ * This Class is the interface for CountWords.
+ */
 
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -19,6 +22,7 @@ public class CountWordsInterface extends JFrame {
 	JButton countWordsButton = new JButton("Click here to count words");
 	JPanel mainPanel = new JPanel();
 	JFileChooser fileChooser = new JFileChooser();
+
 
 
 	public CountWordsInterface() {
@@ -51,13 +55,18 @@ public class CountWordsInterface extends JFrame {
 		}
 
 
+		/**
+		 * This method gets the file selected by the user
+		 *
+		 * @return File userFile
+		 */
 		public File getFile() {
 
 			File userFile = null;
 
 			int returnVal = fileChooser.showOpenDialog(this);
 
-			if (returnVal == fileChooser.APPROVE_OPTION) {
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
 
 				userFile = fileChooser.getSelectedFile();
 

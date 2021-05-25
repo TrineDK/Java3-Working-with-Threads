@@ -1,5 +1,9 @@
 package countWords;
 
+/**
+ * This Class runs the CountWords app
+ */
+
 import javax.swing.SwingUtilities;
 
 public class CountWordsMain {
@@ -18,6 +22,7 @@ public class CountWordsMain {
 				CountWordsController controller = new CountWordsController(view, model);
 			}
 		});
+
 	}
 
 }

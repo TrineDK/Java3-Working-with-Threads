@@ -1,9 +1,13 @@
 package countWords;
 
+/**
+ * This class contains the AnswerListeners for CountWordsInterface and runs the
+ * model.countWords method in separate threads
+ */
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -14,14 +18,12 @@ public class CountWordsController{
 
 	private CountWordsInterface view;
 	private CountWordsModel model;
-	private static int fileCount = 0;
 	List<File> userFiles = new ArrayList<>();
 
 
 	CountWordsController(CountWordsInterface view, CountWordsModel model) {
 		this.view = view;
 		this.model = model;
-
 
 		this.view.addAnswerListener(new AnswerListener());
 	}
@@ -54,14 +56,9 @@ public class CountWordsController{
 				for (File userFile : userFiles) {
 
 					executorService.execute(() -> {
-						try {
-								System.out.println(userFile.getName() + ": " + model.countWords(userFile));
-						} catch (IOException e1) {
-							e1.printStackTrace();
-						}
+						System.out.println(userFile.getName() + ": " + model.countWords(userFile));
 					});
 				}
-
 				executorService.shutdown();
 			}
 		}
