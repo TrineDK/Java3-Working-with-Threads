@@ -4,6 +4,7 @@ package countWords;
  * This Class runs the CountWords app
  */
 
+
 import javax.swing.SwingUtilities;
 
 public class CountWordsMain {

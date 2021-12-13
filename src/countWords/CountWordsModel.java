@@ -4,6 +4,7 @@ package countWords;
  * This Class handles the data for the CountWords app and has one method to count words in a file
  */
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
